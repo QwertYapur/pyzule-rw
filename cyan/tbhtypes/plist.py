@@ -4,6 +4,7 @@ from glob import glob
 from typing import Optional, Any
 
 class Plist:
+    # ...existing code...
   def __init__(
       self, path: str, app_path: Optional[str] = None, throw: bool = True
   ):
@@ -25,14 +26,20 @@ class Plist:
     return self.data.get(key, None)
 
   def __setitem__(self, key: str, val: Any) -> None:
-    self.data[key] = val
+      self.data[key] = val
+      self._dirty = True
 
   def __contains__(self, key: str) -> bool:
     return key in self.data
 
   def save(self) -> None:
-    with open(self.path, "wb") as f:
-      plistlib.dump(self.data, f)
+    # Only save if data changed (batching)
+    if getattr(self, '_dirty', True):
+      with open(self.path, "wb") as f:
+        plistlib.dump(self.data, f)
+      self._dirty = False
+
+    # ...existing code...
 
   def remove(self, key: str) -> bool:
     try:

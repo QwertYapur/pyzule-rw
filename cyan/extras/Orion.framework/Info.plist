@@ -18,11 +18,17 @@
 	<string>1</string>
 	
 	<key>MinimumOSVersion</key>
-	<string>12.2</string>
+	<string>16.0</string>
 	
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
+	</array>
+</dict>
+<!-- Updated for iOS 26 beta 7 compatibility -->
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>iPhoneOS</string>
 	</array>
 </dict>
 </plist>

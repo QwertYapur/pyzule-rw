@@ -1,4 +1,7 @@
+
 # pyzule-rw / cyan
+
+Contact: ZxSteal@YGB.Pussy.Ass
 
 a rewrite of [pyzule](https://github.com/asdfzxcvbn/pyzule) that doesn't (completely) suck !!
 

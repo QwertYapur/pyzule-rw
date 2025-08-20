@@ -6,11 +6,17 @@ import argparse
 
 
 def main() -> None:
+
   if sys.platform == "win32":
     sys.exit("[!] windows is not supported")
 
   parser = argparse.ArgumentParser(
     description="cyan, an azule \"clone\" for modifying iOS apps"
+  )
+
+  parser.add_argument(
+    "--remove-plugins", metavar="PLUGIN", nargs="+",
+    help="remove specific plugins (by name or path)"
   )
 
   parser.add_argument(
@@ -112,5 +118,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-  main()
+  try:
+    main()
+  finally:
+    # Reminder for optimization #8: Ensure all resources are released before moving or deleting directories.
+    # You may add a trigger or callback here if you need to guarantee cleanup.
+    pass
 

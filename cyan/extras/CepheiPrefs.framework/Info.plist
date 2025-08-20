@@ -38,4 +38,12 @@
 	<key>NSPrincipalClass</key>
 	<string>HBDemoRootListController</string>
 </dict>
+<!-- Updated for iOS 26 beta 7 compatibility -->
+	<key>MinimumOSVersion</key>
+	<string>16.0</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>iPhoneOS</string>
+	</array>
+</dict>
 </plist>
