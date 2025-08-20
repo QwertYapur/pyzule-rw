@@ -8,26 +8,36 @@ from cyan import tbhutils, tbhtypes
 
 
 def main(parser: ArgumentParser) -> None:
+
   args = parser.parse_args()
   args.i = os.path.normpath(args.input)
+
+  # Create app after args are parsed
+  app = None
+  if getattr(args, "remove_plugins", None):
+    # app will be created after app_path is determined
+    pass
+
 
   if args.output is not None:
     args.o = os.path.normpath(args.output)
     if not (
-        args.o.endswith(".app")
-        or args.o.endswith(".ipa")
-        or args.o.endswith(".tipa")
+      args.o.endswith(".app")
+      or args.o.endswith(".ipa")
+      or args.o.endswith(".tipa")
     ):
       print("[?] valid file extension not found; will create ipa")
       args.o += ".ipa"
   else:
     args.o = args.i
 
+
   # this also modifies some args, like -f,
   # to ensure there are no duplicates, etc
   arg_err = tbhutils.validate_inputs(args)
   if arg_err is not None:
     parser.error(arg_err)
+
 
   # mfw when "True if True else False" HAHAHAH
   INPUT_IS_IPA = args.i.endswith(".ipa") or args.i.endswith(".tipa")
@@ -37,15 +47,18 @@ def main(parser: ArgumentParser) -> None:
     app_path = tbhutils.get_app(args.i, tmpdir, INPUT_IS_IPA)
     app = tbhtypes.AppBundle(app_path)
 
+
     if app.executable.is_encrypted():
       if args.ignore_encrypted:
         print("[?] main binary is encrypted, ignoring")
       else:
         sys.exit("[!] main binary is encrypted; exiting")
 
+
     if args.cyan is not None:
       changing = vars(args)
       tbhutils.parse_cyans(changing, tmpdir)
+
 
     # this goes before injection,
     # since user might inject their own extensions
@@ -53,6 +66,7 @@ def main(parser: ArgumentParser) -> None:
       app.remove_all_extensions()
     elif args.remove_encrypted:
       app.remove_encrypted_extensions()
+
 
     if args.f is not None:
       app.executable.inject(args.f, tmpdir)
@@ -82,9 +96,10 @@ def main(parser: ArgumentParser) -> None:
     if args.thin:
       app.thin_all()
 
+
     # create subdirectories if necessary
     if "/" in args.o:
-        os.makedirs(os.path.dirname(args.o), exist_ok=True)
+      os.makedirs(os.path.dirname(args.o), exist_ok=True)
 
     # done !
     if OUTPUT_IS_IPA:
