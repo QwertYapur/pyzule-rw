@@ -1,0 +1,7 @@
+{
+    "p12_key_path": "/path/to/your/private_key.p12",
+    "cert_path": "/path/to/your/certificate.pem",
+    "profile_path": "/path/to/your/profile.mobileprovision",
+    "app_group_identifier": "group.com.QwertYapur.Pyzule-R-W-Inject",
+    "keychain_access_group_base": "com.QwertYapur.Pyzule-R-W-Inject"
+}
