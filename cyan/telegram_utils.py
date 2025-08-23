@@ -3,6 +3,7 @@ import requests
 import logging
 import time
 import random
+from typing import Optional, Dict, Any, List
 
 # --- Configuration ---
 # Configure basic logging
@@ -464,12 +465,18 @@ def send_progress_update(chat_id: str, stage: str, percentage: int, speed: str =
 
 # --- Core Functions ---
 
-def send_telegram_message(chat_id: str, text: str, parse_mode: str = "Markdown"):
+def send_telegram_message(chat_id: str, text: str, parse_mode: str = "Markdown", reply_markup=None):
     """
     Sends a message to a specified Telegram chat.
 
     Reads the bot token from environment variables.
     Logs an error if the token is not set or if the request fails.
+    
+    Parameters:
+        chat_id (str): The chat ID to send the message to
+        text (str): The message text
+        parse_mode (str): The parsing mode for the message (Markdown, MarkdownV2, HTML)
+        reply_markup (dict): Optional keyboard markup for inline buttons or custom reply keyboards
     """
     if not TELEGRAM_BOT_TOKEN:
         logging.error("Error: TELEGRAM_BOT_TOKEN environment variable must be set.")
@@ -483,12 +490,81 @@ def send_telegram_message(chat_id: str, text: str, parse_mode: str = "Markdown")
         "parse_mode": parse_mode
     }
     
+    # Add reply_markup if provided (for inline keyboards, etc.)
+    if reply_markup:
+        import json
+        data["reply_markup"] = json.dumps(reply_markup)
+    
     try:
         response = requests.post(api_url, data=data)
         response.raise_for_status()  # Raises an HTTPError for bad responses (4xx or 5xx)
         logging.info(f"Successfully sent Telegram message to chat_id: {chat_id}.")
+        return response.json()  # Return the response for potential use (message_id, etc.)
     except requests.exceptions.RequestException as e:
         logging.error(f"Failed to send Telegram message: {e}")
+        return None
+
+def send_telegram_photo(chat_id: str, photo_data, caption: Optional[str] = None, parse_mode: str = "Markdown", reply_markup=None):
+    """
+    Sends a photo to a specified Telegram chat.
+    
+    Parameters:
+        chat_id (str): The chat ID to send the photo to
+        photo_data: The photo to send (can be a file path, file-like object, or URL)
+        caption (str): Optional caption for the photo
+        parse_mode (str): The parsing mode for the caption (Markdown, MarkdownV2, HTML)
+        reply_markup (dict): Optional keyboard markup for inline buttons or custom reply keyboards
+    """
+    if not TELEGRAM_BOT_TOKEN:
+        logging.error("Error: TELEGRAM_BOT_TOKEN environment variable must be set.")
+        return None
+    
+    api_url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendPhoto"
+    
+    data = {
+        "chat_id": chat_id
+    }
+    
+    # Add optional parameters if provided
+    if caption:
+        data["caption"] = caption
+    if parse_mode:
+        data["parse_mode"] = parse_mode
+    if reply_markup:
+        import json
+        data["reply_markup"] = json.dumps(reply_markup)
+    
+    files = None
+    try:
+        # Check if photo_data is a BytesIO object or file-like object
+        if hasattr(photo_data, 'read'):
+            # It's a file-like object (BytesIO, file handler, etc.)
+            files = {"photo": photo_data}
+            response = requests.post(api_url, data=data, files=files)
+        elif isinstance(photo_data, str) and (photo_data.startswith('http://') or photo_data.startswith('https://')):
+            # It's a URL
+            data["photo"] = photo_data
+            response = requests.post(api_url, data=data)
+        elif isinstance(photo_data, str) and os.path.exists(photo_data):
+            # It's a file path
+            with open(photo_data, 'rb') as photo_file:
+                files = {"photo": photo_file}
+                response = requests.post(api_url, data=data, files=files)
+        else:
+            logging.error("Invalid photo data type. Expected file path, URL, or file-like object.")
+            return None
+        
+        response.raise_for_status()  # Raise exception for 4xx/5xx status codes
+        logging.info(f"Successfully sent photo to chat_id: {chat_id}.")
+        return response.json()  # Return the response for potential use
+    
+    except requests.exceptions.RequestException as e:
+        logging.error(f"Failed to send Telegram photo: {e}")
+        return None
+    except Exception as e:
+        logging.error(f"Error sending Telegram photo: {e}")
+        return None
+        return None
 
 
 def send_telegram_help(chat_id: str):
