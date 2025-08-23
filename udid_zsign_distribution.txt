@@ -1,0 +1,9 @@
+# UDID and zsign Info (Distribution)
+# Generated: 2025-08-23  
+
+UDID: <your-udid-here>
+Certificate Name: <distribution-cert-name>
+Bundle ID: <distribution-bundle-id>
+Password: <distribution-cert-password>
+
+# Use this info for distribution signing only.

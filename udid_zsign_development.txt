@@ -1,0 +1,9 @@
+# UDID and zsign Info (Development)
+# Generated: 2025-08-23  
+
+UDID: <your-udid-here>
+Certificate Name: <development-cert-name>
+Bundle ID: <development-bundle-id>
+Password: <development-cert-password>
+
+# Use this info for development signing only.
