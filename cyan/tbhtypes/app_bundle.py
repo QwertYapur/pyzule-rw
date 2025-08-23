@@ -37,7 +37,14 @@ class AppBundle:
             removed_names.append(name)
             self.cached_executables = None  # Invalidate cache if bundle changes
         if removed_names:
-            send_telegram_message(chat_id="your_chat_id_here", text=f"�️ Removed: {', '.join(removed_names)} from bundle.")
+            # Use telegram_utils to get admin chat_id instead of hardcoding
+            try:
+                from os import environ
+                chat_id = environ.get("TELEGRAM_ADMIN_CHAT_ID", "")
+                if chat_id:
+                    send_telegram_message(chat_id=chat_id, text=f"🗑️ Removed: {', '.join(removed_names)} from bundle.")
+            except Exception as e:
+                logging.warning(f"Could not send Telegram notification: {e}")
         return existed
 
     def get_executables(self) -> list[str]:
@@ -77,10 +84,22 @@ class AppBundle:
                 removed.append(plugin)
         if removed:
             logging.info(f"[*] removed plugins: {', '.join(removed)}")
-            send_telegram_message(chat_id="your_chat_id_here", text=f"🔌 Plugins removed: {', '.join(removed)}")
+            try:
+                from os import environ
+                chat_id = environ.get("TELEGRAM_ADMIN_CHAT_ID", "")
+                if chat_id:
+                    send_telegram_message(chat_id=chat_id, text=f"🔌 Plugins removed: {', '.join(removed)}")
+            except Exception as e:
+                logging.warning(f"Could not send Telegram notification: {e}")
         else:
             logging.warning("[?] no specified plugins were found or removed")
-            send_telegram_message(chat_id="your_chat_id_here", text="⚠️ No specified plugins were found or removed.")
+            try:
+                from os import environ
+                chat_id = environ.get("TELEGRAM_ADMIN_CHAT_ID", "")
+                if chat_id:
+                    send_telegram_message(chat_id=chat_id, text="⚠️ No specified plugins were found or removed.")
+            except Exception as e:
+                logging.warning(f"Could not send Telegram notification: {e}")
 
     def has_watchkit(self) -> bool:
         # Check for WatchKit or related items in the bundle
@@ -105,11 +124,23 @@ class AppBundle:
 
     def fakesign_all(self) -> None:
         self.mass_operate("fakesigned", "fakesign")
-        send_telegram_message(chat_id="your_chat_id_here", text="🔏 All executables fakesigned! ✅")
+        try:
+            from os import environ
+            chat_id = environ.get("TELEGRAM_ADMIN_CHAT_ID", "")
+            if chat_id:
+                send_telegram_message(chat_id=chat_id, text="🔏 All executables fakesigned! ✅")
+        except Exception as e:
+            logging.warning(f"Could not send Telegram notification: {e}")
 
     def thin_all(self) -> None:
         self.mass_operate("thinned", "thin")
-        send_telegram_message(chat_id="your_chat_id_here", text="📦 All executables thinned! ✅")
+        try:
+            from os import environ
+            chat_id = environ.get("TELEGRAM_ADMIN_CHAT_ID", "")
+            if chat_id:
+                send_telegram_message(chat_id=chat_id, text="📦 All executables thinned! ✅")
+        except Exception as e:
+            logging.warning(f"Could not send Telegram notification: {e}")
 
     def remove_all_extensions(self) -> None:
         if self.remove("Extensions", "PlugIns"):

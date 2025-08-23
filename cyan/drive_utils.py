@@ -38,7 +38,6 @@ def find_file_by_name(service, filename: str, folder_id: str) -> Optional[str]:
     """Finds a file by name within a specific folder and returns its ID."""
     try:
         query = f"name = '{filename}' and '{folder_id}' in parents and trashed = false"
-        query = f"name = '{filename}' and '{folder_id}' in parents and trashed = false"
         response = service.files().list(q=query, spaces='drive', fields='files(id, name)').execute()
         files = response.get('files', [])
         
@@ -97,10 +96,13 @@ def download_file_from_drive(filename_or_id: str, destination: str) -> Optional[
     If destination is a directory, the original filename is used.
     Returns the final file path on success, None on failure.
     """
-    """
     service = get_drive_service()
     if not service:
         logging.error("Download failed: Could not authenticate with Google Drive.")
+        return None
+
+    if not DRIVE_FOLDER_ID:
+        logging.error("Download failed: GOOGLE_DRIVE_FOLDER_ID is not configured.")
         return None
 
     try:
@@ -146,12 +148,8 @@ def download_file_from_drive(filename_or_id: str, destination: str) -> Optional[
 
 def upload_directory_to_drive(local_dir: str) -> dict[str, list[str]]:
     """
-    """
     Recursively uploads files in local_dir to the specified Google Drive folder.
     """
-    """
-    """
-    # Recursively uploads files in local_dir to the specified Google Drive folder.
     if not DRIVE_FOLDER_ID:
         return {"success": [], "failed": ["Configuration error: GOOGLE_DRIVE_FOLDER_ID not set."]}
 
@@ -174,6 +172,36 @@ def upload_directory_to_drive(local_dir: str) -> dict[str, list[str]]:
 
     logging.info("Directory upload complete.")
     return results
+
+def get_shareable_link(file_id: str) -> str:
+    """Generate a shareable link for a Google Drive file."""
+    if not file_id:
+        logging.error("Cannot generate link: No file ID provided")
+        return ""
+    
+    service = get_drive_service()
+    if not service:
+        logging.error("Cannot generate link: Drive service unavailable")
+        return ""
+    
+    try:
+        # Create a publicly accessible link
+        service.permissions().create(
+            fileId=file_id,
+            body={"role": "reader", "type": "anyone"},
+            fields="id"
+        ).execute()
+        
+        # Get the webViewLink
+        file = service.files().get(
+            fileId=file_id,
+            fields="webContentLink"
+        ).execute()
+        
+        return file.get("webContentLink", "")
+    except Exception as e:
+        logging.error(f"Failed to generate shareable link: {e}")
+        return ""
 
 # --- Example Usage ---
 if __name__ == "__main__":

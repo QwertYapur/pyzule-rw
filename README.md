@@ -1,4 +1,4 @@
-# 📅 **Project Progress Checklist** (23 August 2025, 19:00)
+# 📅 **Project Progress Checklist** (24 August 2025, 19:00)
 
 ## 🚀 Major Changes
 
@@ -6,6 +6,7 @@
 
 - [x] 🟢 UDID registration support (🍏🔑): Users can register their device UDID directly through the bot for signing and installation. The bot automates the process and notifies you when your device is ready.
 - [x] 🟢 zsign integration (🔏🤖): Fast, dependency-free IPA signing using zsign. The bot uses zsign to sign your IPA with your certificate and provisioning profile, supporting both manual and automated flows.
+- [x] 🟢 Sideloading-friendly enhancements: QR code installation links, AltStore compatibility, and direct installation instructions.
 
 - [x] 🟢 Dynamic Telegram bot menu based on user privilege (👑 Owner, 🛡️ Admin, 💸 Supporter, 🧑 User)
 - [x] 🟢 User-specific certificate registration and password management 🔐
@@ -27,6 +28,9 @@
 - [ ] 🔄 Expand analytics and revenue dashboard for owners 📊
 - [ ] 🔄 Add more advanced signing and patching options 🛠️
 - [ ] 🔄 Continue to improve documentation and onboarding 📚
+- [x] 🟢 Improved error handling in Telegram notifications
+- [x] 🟢 Fixed chat_id hardcoding in AppBundle class
+- [x] 🟢 Code refactoring for better environment variable usage
 
 ## 🧬 pyzule-rw / cyan
 
@@ -79,8 +83,8 @@ You can open an issue to request a feature 😁!! Or just @asdfzxcvb and YGB in 
 Also see my [recommended flags](https://github.com/asdfzxcvbn/pyzule-rw/wiki/recommended-flags) 🚩
 
 - generate and use shareable .cyan files to configure IPAs! 📄
-- inject deb, dylib, framework, bundle, and appex files/folders 🧩
-- automatically fix dependencies on CydiaSubstrate **(cyan uses [ElleKit](https://github.com/evelyneee/ellekit/)!)**, Cephei*, and Orion 🛠️
+- inject dylib, framework, bundle, and appex files/folders 🧩
+- automatically fix dependencies on Cephei* and other common frameworks 🛠️
 - copy any unknown file/folder types to app root 📦
 - change app name, version, bundle id, and minimum os version 🏷️
 - remove UISupportedDevices 🗑️
@@ -91,10 +95,13 @@ Also see my [recommended flags](https://github.com/asdfzxcvbn/pyzule-rw/wiki/rec
 - add custom entitlements to the main executable 🛡️
 - thin all binaries to arm64, it can LARGELY reduce app size sometimes! 🦴
 - remove all app extensions (or just encrypted ones!) 🚫
+- Telegram bot for remote app signing and management 🤖
+- QR code installation links for easy sideloading 📱
+- AltStore and other sideloading tool integration 🔄
 
 ## 🛠️ install instructions (asdfzxcvb-proof, YGB-tested)
 
-cyan supports **🐧 linux, 🍏 macOS, 🪟 WSL, and 📱 jailbroken iOS!** All either x86_64 or arm64/aarch64!!
+cyan supports **🐧 linux, 🍏 macOS, 🪟 WSL!** All either x86_64 or arm64/aarch64!!
 Tested by YGB, broken by asdfzxcvb, fixed by the community. 🤣
 
 First, ensure you have [ar](https://command-not-found.com/ar) and [tar](https://command-not-found.com/tar) installed. 🛠️
@@ -103,9 +110,20 @@ The `zip` and `unzip` commands are *optional* dependencies, they may [fix issues
 
 Also obviously install python, version 3.9 or greater is required 🐍 (asdfzxcvb once tried 2.7 and summoned a demon 👹)
 
-### 📱 jailbroken iOS instructions / automated environment (github workflow, etc)
+### 📱 Sideloading Instructions / Telegram Bot Setup
 
-1. Install OR update cyan: `pip install --force-reinstall https://github.com/asdfzxcvbn/pyzule-rw/archive/main.zip` 🚀
+1. Install cyan: `pip install --force-reinstall https://github.com/asdfzxcvbn/pyzule-rw/archive/main.zip` 🚀
+2. Configure your Telegram bot:
+
+   ```bash
+   export TELEGRAM_BOT_TOKEN="your_bot_token_here"
+   export TELEGRAM_ADMIN_CHAT_ID="your_admin_chat_id"
+   export GOOGLE_SERVICE_ACCOUNT_FILE="path/to/service_account.json"
+   export GOOGLE_DRIVE_FOLDER_ID="your_drive_folder_id"
+   ```
+
+3. Run the bot: `python bot.py` 🤖
+4. Send `/start` to your bot to begin using the Telegram interface! 📱
 
 ## 🧪 making cyan files (asdfzxcvb's favorite part)
 
