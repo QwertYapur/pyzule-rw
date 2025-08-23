@@ -64,8 +64,15 @@
         
         "app_specific_settings": {
             "com.apple.mobilesafari": {
-                "preserve_entitlements": ["com.apple.private.security.storage.WebKit"],
-                "inject_frameworks": ["CydiaSubstrate.framework"],
+                "preserve_entitlements": [
+                    "com.apple.private.security.storage.WebKit",
+                    "com.apple.private.browser.networkextension",
+                    "com.apple.private.security.WebKit-frameworks",
+                    "com.apple.private.security.container-required",
+                    "com.apple.private.security.WebKit-browsermode",
+                    "com.apple.developer.SafariServices.SafariExtension",
+                    "com.apple.private.security.cookie-accept-policy"
+                ],
                 "custom_bundle_id": "com.QwertYapur.SafariTweaked"
             },
             "com.apple.Preferences": {
@@ -90,7 +97,13 @@
         "notify_on_completion": true,
         "send_status_updates": true,
         "upload_to_drive": true,
-        "admin_notifications": true
+        "admin_notifications": true,
+        "progress_updates": true,
+        "inline_keyboard": true,
+        "sideloading_instructions": true,
+        "automatic_altstore_links": true,
+        "share_signed_apps": true,
+        "qr_code_install_links": true
     },
     
     "drive_integration": {
