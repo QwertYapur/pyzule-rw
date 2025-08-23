@@ -1,7 +1,118 @@
 {
-    "p12_key_path": "/path/to/your/private_key.p12",
-    "cert_path": "/path/to/your/certificate.pem",
-    "profile_path": "/path/to/your/profile.mobileprovision",
-    "app_group_identifier": "group.com.QwertYapur.Pyzule-R-W-Inject",
-    "keychain_access_group_base": "com.QwertYapur.Pyzule-R-W-Inject"
+    "description": "Enhanced Pyzule-RW Signing Configuration with PPQ Integration",
+    "version": "2.0",
+    
+    "certificates": {
+        "development": {
+            "p12_key_path": "/Users/tjn/Library/Mobile Documents/com~apple~CloudDocs/Certificates/iPhone 16 Pro/Pikk 14 August 2025/Development/private_key.p12",
+            "cert_path": "/Users/tjn/Library/Mobile Documents/com~apple~CloudDocs/Certificates/iPhone 16 Pro/Pikk 14 August 2025/Development/certificate.pem",
+            "profile_path": "/Users/tjn/Library/Mobile Documents/com~apple~CloudDocs/Certificates/iPhone 16 Pro/Pikk 14 August 2025/Development/CertificatsDevelopement22042025.mobileprovision",
+            "password": "",
+            "team_id": "NX22QCXLLH",
+            "common_name": "iPhone Developer: Toni Nijhof (G7J8QGR77G)",
+            "expires": "2025-08-14",
+            "status": "active"
+        },
+        "distribution": {
+            "p12_key_path": "",
+            "cert_path": "",
+            "profile_path": "",
+            "password": "",
+            "team_id": "",
+            "common_name": "",
+            "expires": "",
+            "status": "not_configured"
+        }
+    },
+    
+    "entitlements": {
+        "base_entitlements_path": "dev.entitlements",
+        "app_group_identifier": "group.com.QwertYapur.Pyzule-R-W-Inject",
+        "keychain_access_group_base": "com.QwertYapur.Pyzule-R-W-Inject",
+        "default_bundle_id": "com.QwertYapur.Pyzule-R-W-Inject",
+        
+        "plugin_support": {
+            "enabled": true,
+            "frameworks_path": "cyan/extras",
+            "supported_frameworks": [
+                "Cephei.framework",
+                "CepheiPrefs.framework", 
+                "CepheiUI.framework",
+                "CydiaSubstrate.framework",
+                "Orion.framework"
+            ],
+            "automatic_injection": true,
+            "preserve_original_entitlements": true
+        }
+    },
+    
+    "ppq_integration": {
+        "enabled": true,
+        "status_endpoint": "https://api.ppq.dev/status",
+        "fallback_mode": "offline",
+        "cache_duration": 300,
+        "retry_attempts": 3
+    },
+    
+    "signing_options": {
+        "force_resign": true,
+        "preserve_metadata": true,
+        "compress_ipa": true,
+        "validate_certificates": true,
+        "check_compatibility": true,
+        "backup_original": false,
+        
+        "app_specific_settings": {
+            "com.apple.mobilesafari": {
+                "preserve_entitlements": ["com.apple.private.security.storage.WebKit"],
+                "inject_frameworks": ["CydiaSubstrate.framework"],
+                "custom_bundle_id": "com.QwertYapur.SafariTweaked"
+            },
+            "com.apple.Preferences": {
+                "preserve_entitlements": ["com.apple.private.preferences.ui"],
+                "inject_frameworks": ["Cephei.framework", "CepheiPrefs.framework"],
+                "custom_bundle_id": "com.QwertYapur.PreferencesTweaked"
+            }
+        },
+        
+        "udid_specific_settings": {
+            "00008030-001E54223A38802E": {
+                "device_name": "iPhone 16 Pro",
+                "preferred_certificate": "development",
+                "auto_install": true,
+                "backup_enabled": true
+            }
+        }
+    },
+    
+    "telegram_integration": {
+        "enabled": true,
+        "notify_on_completion": true,
+        "send_status_updates": true,
+        "upload_to_drive": true,
+        "admin_notifications": true
+    },
+    
+    "drive_integration": {
+        "enabled": true,
+        "auto_upload": true,
+        "folder_structure": "organized_by_date",
+        "compress_before_upload": true,
+        "cleanup_local_files": false
+    },
+    
+    "validation": {
+        "check_expiration": true,
+        "warn_before_days": 30,
+        "validate_team_id": true,
+        "check_provisioning_devices": true,
+        "verify_entitlements": true
+    },
+    
+    "logging": {
+        "level": "INFO",
+        "file_path": "logs/signing.log",
+        "telegram_errors": true,
+        "detailed_progress": true
+    }
 }

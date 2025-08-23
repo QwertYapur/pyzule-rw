@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- Core Development Entitlements -->
+	<key>application-identifier</key>
+	<string>NX22QCXLLH.com.QwertYapur.Pyzule-R-W-Inject</string>
+	
+	<key>com.apple.developer.team-identifier</key>
+	<string>NX22QCXLLH</string>
+	
+	<key>get-task-allow</key>
+	<true/>
+	
+	<!-- Enhanced App Groups for plugin data sharing -->
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.QwertYapur.Pyzule-R-W-Inject</string>
+		<string>group.com.QwertYapur.PyzuleShared</string>
+		<string>group.com.QwertYapur.PluginData</string>
+		<string>group.com.QwertYapur.PPQStatus</string>
+	</array>
+	
+	<!-- Enhanced Keychain Access for plugin security -->
+	<key>keychain-access-groups</key>
+	<array>
+		<string>NX22QCXLLH.com.QwertYapur.Pyzule-R-W-Inject</string>
+		<string>NX22QCXLLH.com.QwertYapur.PyzuleShared</string>
+		<string>NX22QCXLLH.group.com.QwertYapur.Pyzule-R-W-Inject</string>
+	</array>
+	
+	<!-- Enhanced iCloud Support for certificate and plugin storage -->
+	<key>com.apple.developer.icloud-services</key>
+	<array>
+		<string>CloudDocuments</string>
+		<string>CloudKit</string>
+	</array>
+	
+	<key>com.apple.developer.icloud-container-identifiers</key>
+	<array>
+		<string>iCloud.com.QwertYapur.Pyzule-R-W-Inject</string>
+	</array>
+	
+	<key>com.apple.developer.ubiquity-container-identifiers</key>
+	<array>
+		<string>iCloud.com.QwertYapur.Pyzule-R-W-Inject</string>
+	</array>
+	
+	<!-- Enhanced Associated Domains for Telegram and PPQ integration -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:pyzule-rw.com</string>
+		<string>applinks:t.me</string>
+		<string>applinks:telegram.me</string>
+		<string>applinks:api.ppq.dev</string>
+	</array>
+	
+	<!-- Enhanced Network Extensions for plugin functionality -->
+	<key>com.apple.developer.networking.networkextension</key>
+	<array>
+		<string>packet-tunnel-provider</string>
+		<string>app-proxy-provider</string>
+		<string>content-filter-provider</string>
+		<string>dns-proxy</string>
+	</array>
+	
+	<!-- Network Access for PPQ API and Telegram -->
+	<key>com.apple.security.network.client</key>
+	<true/>
+	<key>com.apple.security.network.server</key>
+	<true/>
+	<key>com.apple.security.network.arbitrary-loads</key>
+	<true/>
+	
+	<!-- Enhanced Background Processing for plugin management -->
+	<key>com.apple.developer.background-modes</key>
+	<array>
+		<string>background-fetch</string>
+		<string>background-processing</string>
+		<string>remote-notification</string>
+		<string>voip</string>
+	</array>
+	
+	<key>com.apple.developer.background-processing</key>
+	<array>
+		<string>com.QwertYapur.Pyzule-R-W-Inject.plugin-sync</string>
+		<string>com.QwertYapur.Pyzule-R-W-Inject.ppq-status</string>
+		<string>com.QwertYapur.Pyzule-R-W-Inject.drive-upload</string>
+		<string>com.QwertYapur.Pyzule-R-W-Inject.processing</string>
+	</array>
+	
+	<!-- Push Notifications for Telegram integration -->
+	<key>com.apple.developer.usernotifications.communication</key>
+	<true/>
+	<key>aps-environment</key>
+	<string>development</string>
+	
+	<!-- File System Access for IPA and plugin processing -->
+	<key>com.apple.security.files.user-selected.read-write</key>
+	<true/>
+	<key>com.apple.security.files.downloads.read-write</key>
+	<true/>
+	
+	<!-- Plugin Framework Support (Critical for Substrate/Orion) -->
+	<key>com.apple.security.cs.allow-dyld-environment-variables</key>
+	<true/>
+	<key>com.apple.security.cs.allow-jit</key>
+	<true/>
+	<key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+	<true/>
+	<key>com.apple.security.cs.disable-executable-page-protection</key>
+	<true/>
+	<key>com.apple.security.cs.debugger</key>
+	<true/>
+	<key>com.apple.security.cs.allow-relative-library-loads</key>
+	<true/>
+	
+	<!-- Enhanced Plugin Injection Support -->
+	<key>com.apple.private.security.clear-library-validation</key>
+	<true/>
+	<key>com.apple.private.skip-library-validation</key>
+	<true/>
+	<key>com.apple.private.security.no-container</key>
+	<true/>
+	<key>platform-application</key>
+	<true/>
+	
+	<!-- Developer Tools and Advanced Access -->
+	<key>com.apple.security.temporary-exception.apple-internal</key>
+	<true/>
+	<key>com.apple.private.CoreSimulator.allow-host-filesystem-writes</key>
+	<true/>
+	<key>com.apple.security.automation.apple-events</key>
+	<true/>
+	<key>com.apple.developer.kernel.extended-virtual-addressing</key>
+	<true/>
+	<key>com.apple.security.exception.process-info</key>
+	<true/>
+	
+	<!-- Memory Management for Plugin Loading -->
+	<key>com.apple.developer.memory.enable_memory_limit_exception</key>
+	<true/>
+	
+	<!-- System Service Access for Plugins -->
+	<key>com.apple.security.exception.mach-lookup.global-name</key>
+	<array>
+		<string>com.apple.SecurityServer</string>
+		<string>com.apple.system.notification_center</string>
+		<string>com.apple.system.logger</string>
+		<string>com.apple.springboard.services</string>
+		<string>com.apple.backboard.hid.services</string>
+	</array>
+	
+	<!-- WebKit Support for PPQ Integration -->
+	<key>com.apple.developer.web-browser-engine.webkit</key>
+	<true/>
+	
+	<!-- Shared Preferences for Plugin Communication -->
+	<key>com.apple.security.exception.shared-preference.read-write</key>
+	<array>
+		<string>com.QwertYapur.Pyzule-R-W-Inject</string>
+		<string>com.QwertYapur.PPQStatus</string>
+		<string>com.QwertYapur.PluginData</string>
+	</array>
+	
+	<key>com.apple.security.exception.shared-preference.read-only</key>
+	<array>
+		<string>com.apple.Preferences</string>
+		<string>com.apple.security</string>
+		<string>com.apple.mobile.installation</string>
+	</array>
+	
+	<!-- Inter-App Communication for Plugin System -->
+	<key>com.apple.security.exception.shared-preference.write</key>
+	<array>
+		<string>com.QwertYapur.PyzuleShared</string>
+	</array>
+	
+	<!-- Advanced Plugin Support Entitlements -->
+	<key>com.apple.private.security.storage.AppDataContainers</key>
+	<true/>
+	<key>com.apple.private.security.storage.AppBundles</key>
+	<true/>
+	<key>com.apple.security.exception.files.absolute-path.read-write</key>
+	<array>
+		<string>/private/var/mobile/Library/Preferences/</string>
+		<string>/private/var/mobile/Library/Application Support/</string>
+	</array>
+</dict>
+</plist>

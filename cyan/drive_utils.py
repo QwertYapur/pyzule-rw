@@ -144,10 +144,14 @@ def download_file_from_drive(filename_or_id: str, destination: str) -> Optional[
         logging.error(f"Error: The destination path '{destination}' is a directory. Please provide a full file path or a directory to save into.")
         return None
 
-def upload_directory_to_drive(local_dir: str) -> dict:
+def upload_directory_to_drive(local_dir: str) -> dict[str, list[str]]:
+    """
     """
     Recursively uploads files in local_dir to the specified Google Drive folder.
     """
+    """
+    """
+    # Recursively uploads files in local_dir to the specified Google Drive folder.
     if not DRIVE_FOLDER_ID:
         return {"success": [], "failed": ["Configuration error: GOOGLE_DRIVE_FOLDER_ID not set."]}
 

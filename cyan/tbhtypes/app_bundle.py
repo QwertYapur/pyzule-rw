@@ -37,7 +37,7 @@ class AppBundle:
             removed_names.append(name)
             self.cached_executables = None  # Invalidate cache if bundle changes
         if removed_names:
-            send_telegram_message(f"�️ Removed: {', '.join(removed_names)} from bundle.")
+            send_telegram_message(chat_id="your_chat_id_here", text=f"�️ Removed: {', '.join(removed_names)} from bundle.")
         return existed
 
     def get_executables(self) -> list[str]:
@@ -77,10 +77,10 @@ class AppBundle:
                 removed.append(plugin)
         if removed:
             logging.info(f"[*] removed plugins: {', '.join(removed)}")
-            send_telegram_message(f"🔌 Plugins removed: {', '.join(removed)}")
+            send_telegram_message(chat_id="your_chat_id_here", text=f"🔌 Plugins removed: {', '.join(removed)}")
         else:
             logging.warning("[?] no specified plugins were found or removed")
-            send_telegram_message("⚠️ No specified plugins were found or removed.")
+            send_telegram_message(chat_id="your_chat_id_here", text="⚠️ No specified plugins were found or removed.")
 
     def has_watchkit(self) -> bool:
         # Check for WatchKit or related items in the bundle
@@ -105,11 +105,11 @@ class AppBundle:
 
     def fakesign_all(self) -> None:
         self.mass_operate("fakesigned", "fakesign")
-        send_telegram_message("🔏 All executables fakesigned! ✅")
+        send_telegram_message(chat_id="your_chat_id_here", text="🔏 All executables fakesigned! ✅")
 
     def thin_all(self) -> None:
         self.mass_operate("thinned", "thin")
-        send_telegram_message("📦 All executables thinned! ✅")
+        send_telegram_message(chat_id="your_chat_id_here", text="📦 All executables thinned! ✅")
 
     def remove_all_extensions(self) -> None:
         if self.remove("Extensions", "PlugIns"):
