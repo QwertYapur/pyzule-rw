@@ -10,3 +10,28 @@ build/
 *.app/
 
 token_drive.pickle
+
+# --- Additional protection for secrets and sensitive files ---
+client_secret*.json
+*.p12
+*.mobileprovision
+*.pem
+*.key
+*.crt
+*.der
+*.jks
+*.keystore
+*.pfx
+*.bak
+*.old
+token_*.pickle
+*.env
+.env*
+secrets.*
+credentials.*
+google-credentials*
+apple-credentials*
+*oauth*
+*token*
+*password*
+*secret*
