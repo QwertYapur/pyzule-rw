@@ -1,0 +1,8 @@
+# Core dependencies for pyzule-rw
+Pillow>=11.3.0
+qrcode>=8.2.0
+google-auth>=2.6.0
+google-auth-oauthlib>=0.4.6
+google-api-python-client>=2.0.0
+requests>=2.27.1
+python-telegram-bot>=13.0
